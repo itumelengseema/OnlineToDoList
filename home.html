@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-bar">
+            <img src="../images/to-do-list.png">
+
+            <label id="txtTime"></label>
+
+            <div>
+                <ul>
+                    <li><a href="profile.html">Profile</a></li>
+                    <li id="logout">Logout</li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="main-back-home">
+
+            <div class="upper-sec">
+                <div method="" action="">
+                    <input type="search" placeholder="Search title" id="txtSearch" name="txtSearch" class="txt-search">
+                    
+                </div>
+                
+                <div>
+                    <a name="btnNewItem" href="NewItem.html" class="new-item">New Item</a>
+                </div>
+            </div>
+            
+            <div class="tblItems">
+                    <table id="tblItems">
+                        <thead class="cls-thead">
+                            <tr class="cls-th">
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Due Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody id="tblTbody">
+                            
+                        </tbody>
+                    </table>
+            </div>
+
+            <div class="table-scro">
+                <label>&lt;</label>
+                <label> Page 1 </label>
+                <label>&gt;</label>
+
+            </div>
+    </div>
+    <script src="../javascript/home.js"></script>
+    <script src="../javascript/Logout.js"></script>
+</body>
+</html>
