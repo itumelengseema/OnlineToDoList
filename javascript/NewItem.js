@@ -89,6 +89,11 @@ function AddNew()
 
 function getItemsFromStorage(){
 
+    if(!localStorage.getItem("Items"))
+    {
+        return [];
+    }
+    
     return JSON.parse(localStorage.getItem("Items"));
 }
 
@@ -127,11 +132,15 @@ function fClearFleids(txtTitle, txtDesc, txtDate)
 function fgetSystemTime(){
     setInterval(() => {
         const dt_date = new Date()
-        const hour = dt_date.getHours();
-        
+        let hour = dt_date.getHours();
         let min = dt_date.getMinutes();
         let sec = dt_date.getSeconds();
 
+        if(hour < 10)
+        {
+            hour = "0" + hour;
+        }
+        
         if(min < 10)
         {
             min = "0" + min;
@@ -185,7 +194,20 @@ window.addEventListener("DOMContentLoaded", () =>{
         const DateDt = new Date().toLocaleDateString();
         
         const NewDate = DateDt.split("/")
-        const dt = NewDate[NewDate.length - 1] + "-0" + NewDate[0] + "-" + NewDate[1]
+
+
+        let dayD = NewDate[0]
+        let monD = NewDate[1]
+        if(NewDate[0] < 10)
+        {
+            dayD = "0" + NewDate[0]
+        }
+
+        if(NewDate[1] < 10)
+        {
+            monD = "0" + NewDate[1]
+        }
+        const dt = NewDate[NewDate.length - 1] + "-" + dayD + "-" + monD
 
         txtDate.valueAsDate = new Date();
 

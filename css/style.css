@@ -39,12 +39,12 @@ nav .nav-bar label:hover{
     font-weight: 600;
    }
 
-nav .nav-bar img{
+nav .nav-bar .logo{
     height: 60px;
     width: 60px;
 }
 
-nav .nav-bar div{
+nav .nav-bar .nav-inner{
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -75,6 +75,87 @@ nav .nav-bar div ul li{
 
 nav .nav-bar div ul li:hover{
     font-weight: bold;
+}
+
+.dropbtn:hover{
+    transform: rotate(-30deg);
+}
+
+/* Style The Dropdown Button */
+.dropbtn {
+  cursor: pointer;  
+  height: 20px;
+    width: 20px;
+    cursor: pointer;
+    justify-content: center;
+    text-align: center;
+    margin-top: auto;
+
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  align-self: center;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+
+.item{
+    padding: 10px;
+    gap: 2px;
+    font-size: 11px;
+    color: black;
+    border-bottom: 1px solid darkgray;
+}
+
+.item:hover{
+    background-color: burlywood;
+}
+
+.item a{
+    border: none;
+    margin-top: 3px;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    font-size: 10px;
+
+    background-color: darkgrey;
+}
+
+.item a:hover{
+    color: black;
+    background-color: white;
 }
 
 a{

@@ -111,7 +111,7 @@ function fgetSystemTime(){
         {
             hour = "0" + hour;
         }
-
+        
         if(min < 10)
         {
             min = "0" + min;
@@ -151,6 +151,8 @@ window.addEventListener("DOMContentLoaded", () => {
                 txtTitle.value = item.Title
                 txtDesc.value = item.Description
                 txtDate.value = item.Date
+
+                txtDate.setAttribute('min', item.Date)
 
                 break;
             }
