@@ -40,8 +40,8 @@ nav .nav-bar label:hover{
    }
 
 nav .nav-bar .logo{
-    height: 60px;
-    width: 60px;
+    height: 40px;
+    width: 80px;
 }
 
 nav .nav-bar .nav-inner{
@@ -173,7 +173,7 @@ a{
 }
 
 .main-back{
-background-color:coral;
+background-color:white;
 border-radius: 15px;
 width: 450px;
 margin: auto;
@@ -229,7 +229,7 @@ padding: 40px;
 
 
 .main-back-home{
-    background-color:coral;
+    background-color:white;
     border-radius: 8px;
     width: 700px;
     padding: 40px;
@@ -277,7 +277,7 @@ padding: 40px;
 }
 
 .main-back .form .log-reg-buttons{
-background-color: coral;
+background-color: black;
 font-size: 18px;
 height: 45px;
 border-radius: 5px;
@@ -299,6 +299,7 @@ background-color:mediumseagreen;
     border: 0px;
     font-size: 17px;
     margin: 8px 0px;
+    border: 1px solid black;
 }
 
 .below-text{
@@ -309,11 +310,12 @@ background-color:mediumseagreen;
 
 .lblsign-up{
     font-weight: 700;
+
 }
 
 .below-text a{
     text-decoration: none;
-    color: white;
+    color: grey;
 }
 
 .lblsign-up:hover{
@@ -408,13 +410,13 @@ td, th{
 }
 
 .div-btn .new-item, .div-btn .new-item a, .btnSubm, .new-item{
-    background-color: white;
+    background-color: black;
     border: 0px;
     font-size: 14px;
     padding: 8px 15px;
     border-radius: 5px;
     margin-bottom: 25px;
-    color: black;
+    color: white;
     text-decoration: none;
     font-family: 'Montserrat', sans-serif;
 }
@@ -448,4 +450,31 @@ font-size: 25px;
     object-fit: cover;
     width: 100px;
     border-radius: 50%;
+}
+
+.park-holder{
+    display: flex;
+    flex-direction: column;
+    gap:8px;
+    text-decoration: underline;
+}
+
+.parking-items{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+.parking{
+    background-color: black;
+    padding: 5px;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+}
+
+.parking:hover, .parking label:hover{
+background-color: green;
+cursor: pointer;
+color: white;
+text-decoration: white underline;
 }

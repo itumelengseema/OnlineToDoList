@@ -79,7 +79,7 @@ function EditItem()
     pgHeader.innerHTML = "Saved successfully"
     
     setTimeout(() => {
-        div.style.background = "coral";
+        div.style.background = "white";
         pgHeader.innerHTML = "New Item"
 
         window.location.replace("home.html");

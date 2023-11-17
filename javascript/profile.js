@@ -97,7 +97,7 @@ function UpdateProfile()
     pgHeader.innerHTML = "Profile Update"
 
     setTimeout(() => {
-        div.style.background = "coral";
+        div.style.background = "white";
         window.location.replace("home.html")
     }, 2000);
 

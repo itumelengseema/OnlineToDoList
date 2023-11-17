@@ -4,129 +4,120 @@ const pgHeader = document.querySelector(".lbl-new-item")
 let anItem = {}
 let Items = [];
 
-const txtTitle = document.getElementById("txtTitle")
-const txtDesc = document.getElementById("txtDesc")
-const txtDate = document.getElementById("dtDate")
+const txtOwner = document.getElementById("txtOwner")
+const txtContact = document.getElementById("txtContact")
+const txtMake = document.getElementById("txtMake")
 
-lblTime = document.getElementById("txtTime");
+const txtModel = document.getElementById("txtModel")
+const txtNumberPlate = document.getElementById("txtNumberPlate")
+
+const txtProvince = document.getElementById("txtProvince")
+const txtParking = document.getElementById("txtParking")
+
+const txtTimeIn = document.getElementById("txtTimeIn")
+
+const txtTimeOut = document.getElementById("txtTimeOut")
+
+// lblTime = document.getElementById("txtTime");
 
 let LoggedUser;
 
 function AddNew()
 {
-    const lblunfeed = document.getElementById("lblunFeedback")
-    const lblpassfeed = document.getElementById("lbpaFeedback")
-    const lblrepassfeed = document.getElementById("lbrepaFeedback")
-
-     if(txtTitle.value === "")
+     if(txtOwner.value === "")
     {
-        lblunfeed.innerHTML = "Empty Title"
-        lblunfeed.style.color = "red"
+        alert("Missing Details");
 
         return;
     }
-    else{
-        lblunfeed.innerHTML = ""
-    }
-
-    if(txtDesc.value === "")
+    else if(txtContact.value === "")
     {
-        lblpassfeed.innerHTML = "Empty Description"
-        lblpassfeed.style.color = "red"
+        alert("Missing Details");
 
         return
     }
-    else{
-        lblpassfeed.innerHTML = ""
-    }
-
-    if(txtDate.value === "")
+    else if(txtMake.value === "")
     {
-        lblrepassfeed.innerHTML = "Empty Due Date"
-        lblrepassfeed.style.color = "red"
+        alert("Missing Details");
+        return
+    }
+    else if(txtModel.value === "")
+    {
+        alert("Missing Details");
+        return
+    }
+    else if(txtNumberPlate.value === "")
+    {
+        alert("Missing Details");
 
         return
     }
-    else{
-        lblrepassfeed.innerHTML = ""
+    else if(txtTimeIn.value === "")
+    {
+        alert("Missing Details");
+        return
+    }
+    else if(txtParking.value === "")
+    {
+        alert("Missing Details");
+        return
+    }
+    else if(txtProvince.value === "")
+    {
+        alert("Missing Details");
+        return
+    }
+    else if(txtTimeOut.value === "")
+    {
+        alert("Missing Details");
+        return
     }
 
-    anItem.userid = LoggedUser;
-    anItem.Title = txtTitle.value;
-    anItem.Description = txtDesc.value;
-    anItem.Date = txtDate.value;
-    anItem.id = 0;
+    firebase.database().ref('users/' + LoggedUser + "/Bookings").push().set({
+            Owner: txtOwner.value,
+            Contact:txtContact.value,
+            Make:txtMake.value,
+            Model:txtModel.value,
+            NumberPlate:txtNumberPlate.value,
+            TimeIn:txtTimeIn.value,
+            Timeout:txtTimeOut.value,
+            Province:txtProvince.value,
+            Parking: txtParking.value
+      }).then(() =>{
 
-    if(!fCheckIfItemExists()) {
-
-        Items = getItemsFromStorage();
-
-        if(Items !== null)
-        {
-            anItem.id = Items.length;
-        }
-        else{
-            Items = [];
-        }
-
-        Items.push(anItem);
-        localStorage.set
-
-        localStorage.setItem("Items", JSON.stringify(Items))
+        bpla = (txtParking.value).split("-")
+        firebase
+        .database()
+        .ref('BookingPlaces/' + bpla[0] + '/' + bpla[1])
+        .remove().then(() => {
+            alert("SAVED")
+            location.reload();
+        }).catch(err => {
+            alert(err)
+        })
+      }).catch(err =>{
+        alert(err)
+      });
+    
 
         div.style.background = "rgb(75, 180, 54)";
 
         pgHeader.innerHTML = "Saved successfully"
         
         setTimeout(() => {
-            div.style.background = "coral";
+            div.style.background = "white";
             pgHeader.innerHTML = "New Item"
         }, 4000);
 
-        fClearFleids(txtTitle, txtDesc, txtDate);
-    }
-}
-
-function getItemsFromStorage(){
-
-    if(!localStorage.getItem("Items"))
-    {
-        return [];
-    }
-    
-    return JSON.parse(localStorage.getItem("Items"));
-}
-
-function fCheckIfItemExists(){
-
-    const Founditems = getItemsFromStorage()
-
-    for(item of Founditems) 
-    {
-        if(item.userid == LoggedUser)
-        {
-            if(item.Title == txtTitle.value && item.Description == txtDesc.value && item.Date == txtDate.value)
-            {
-                alert("Item already exists");
-                return true;
-            }
-            else if(item.Title == txtTitle.value){
-
-                alert("Item with this title exists");
-                return true;
-            }
-        }
-    }
-
-    return false;
+        // fClearFleids(txtTitle, txtDesc, txtDate);
 }
 
 function fClearFleids(txtTitle, txtDesc, txtDate)
 {
-    txtTitle.value = "";
-    txtDesc.value = "";
-    txtDate.value = "";
-    txtDate.valueAsDate = new Date();
+    // txtTitle.value = "";
+    // txtDesc.value = "";
+    // txtDate.value = "";
+    // txtDate.valueAsDate = new Date();
 }
 
 function fgetSystemTime(){
@@ -152,7 +143,7 @@ function fgetSystemTime(){
         }
 
         const displayTime = hour + ":" + min + ":" + sec;
-        lblTime.innerHTML = displayTime;
+        txtTime.innerHTML = displayTime;
     }, 1000)
 }
 
@@ -167,6 +158,8 @@ window.addEventListener("DOMContentLoaded", () =>{
     else
     {
         LoggedUser = sessionStorage.getItem("LoggedUser")
+
+        txtOwner.value = LoggedUser;
 
         // const dtToday = new Date();
     
@@ -190,29 +183,20 @@ window.addEventListener("DOMContentLoaded", () =>{
         // var maxDate = dtToday.toISOString().substr(0, 10);
     
         // txtDate.setAttribute('min', maxDate);
-
-        const DateDt = new Date().toLocaleDateString();
-        
-        const NewDate = DateDt.split("/")
-
-
-        let dayD = NewDate[0]
-        let monD = NewDate[1]
-        if(NewDate[0] < 10)
-        {
-            dayD = "0" + NewDate[0]
-        }
-
-        if(NewDate[1] < 10)
-        {
-            monD = "0" + NewDate[1]
-        }
-        const dt = NewDate[NewDate.length - 1] + "-" + dayD + "-" + monD
-
-        txtDate.valueAsDate = new Date();
-
-        txtDate.setAttribute('min', dt)
     }
 })
 
 btnSave.addEventListener("click", AddNew)
+txtProvince.addEventListener('change', () => {
+    firebase
+    .database()
+    .ref("BookingPlaces/" + txtProvince.value)
+    .on("value", function (snap) {
+        let name = "";
+        snap.forEach(element => {
+            name += `<option value="${snap.key}-${element.val()}">${snap.key} - ${element.val()}</option>`
+        });
+
+        txtParking.innerHTML = name;
+    });
+})

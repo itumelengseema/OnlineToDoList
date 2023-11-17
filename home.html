@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <title>Car Parking</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
 <body>
 
     <nav>
         <div class="nav-bar">
-            <img class="logo" src="../images/to-do-list.png">
+            <img class="logo" src="./images/e_parking.png">
 
             <label id="txtTime">00:00:00</label>
 
@@ -27,7 +27,7 @@
                         </div>
                     </div>
 
-                    <li><a href="profile.html">Profile</a></li>
+                    
                     <li id="logout">Logout</li>
                 </ul>
             </div>
@@ -39,13 +39,9 @@
         
 
             <div class="upper-sec">
-                <div method="" action="">
-                    <input type="search" placeholder="Search title" id="txtSearch" name="txtSearch" class="txt-search">
-                    
-                </div>
                 
                 <div>
-                    <a name="btnNewItem" href="NewItem.html" class="new-item">New Item</a>
+                    <a name="btnNewItem" href="NewItem.html" class="new-item">New Booking</a>
                 </div>
             </div>
             
@@ -53,11 +49,16 @@
                     <table id="tblItems">
                         <thead class="cls-thead">
                             <tr class="cls-th">
-                                <th>#</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Due Date</th>
-                                <th>Action</th>
+                                <th>Contact</th>
+                                <th>Make</th>
+                                <th>Model</th>
+                                <th>NumberPlate</th>
+                                <th>Owner</th>
+                                <th>Parking</th>
+                                <th>Province</th>
+                                <th>TimeIn</th>
+                                <th>Timeout</th>
+                                <th>Option</th>
                             </tr>
                         </thead>
                         
@@ -74,7 +75,9 @@
 
             </div>
     </div>
-    <script src="../javascript/home.js"></script>
-    <script src="../javascript/Logout.js"></script>
+    <script src="./javascript/home.js"></script>
+    <script src="./javascript/Logout.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+    <script src="./javascript/Config.js"></script>
 </body>
 </html>

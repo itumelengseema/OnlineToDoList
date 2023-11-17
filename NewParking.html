@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Parking</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-bar">
+            <img class="logo" src="./images/e_parking.png">
+
+            <label id="txtTime">00:00:00</label>
+
+            <div>
+                <ul>
+                    
+                    <li id="logout">Logout</li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="main-back">
+            
+            <div class="form" id="frmnew-item">
+                <div class="upper-sec">
+                    <label class="lbl-new-item">New Item</label>
+                    
+                    <div class="div-btn">
+                        <a name="btnCancel" id="btnCancel" href="AdminHome.html" class="new-item">Cancel</a>
+                        <input type="button" id="Save" value="Save" name="btnSave" class="btnSubm">
+                    </div>
+
+                </div>
+                        <label class="lbl">Province:</label>
+                    <select class="txtInput" type="text" id="txtProvince" name="txtProvince" required placeholder="NumberPlate...">
+                        <option value="Johannesburg">Johannesburg</option>
+                        <option value="Durban">Durban</option>
+                        <option value="Cape Town">Cape Town</option>
+                    </select>
+                    <label id="lblunFeedback"></label>
+
+                    <label class="lbl">Spot(e.g B12):</label>
+                    <input class="txtInput" type="text" id="txtOwner" name="txtOwner" required placeholder="Spot...">
+                    <label id="lblunFeedback"></label>
+            </div>
+
+    </div>
+    <script src="./javascript/NewParking.js"></script>
+    <script src="./javascript/Logout.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+    <script src="./javascript/Config.js"></script>
+</body>
+</html>

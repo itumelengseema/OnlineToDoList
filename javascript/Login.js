@@ -2,6 +2,10 @@ const btnLogin = document.getElementById("btnLogin")
 let lsUser = [];
 let aUser = {};
 
+// import { getDatabase } from "firebase/database";
+
+// const database = getDatabase();
+
 lblTime = document.getElementById("txtTime");
 
 function Login()
@@ -35,36 +39,64 @@ function Login()
         lblpassfeed.innerHTML = ""
     }
 
-        lsUser = JSON.parse(localStorage.getItem("Users"))
+    firebase
+    .database()
+    .ref("users/" + txtusername.value + "/LoginDetails")
+    .on("value", function (snap) {
 
-        let userFound = false;
+        if(snap.val()){
 
-        let founduser ={};
-
-        if(lsUser !== null)
-        {
-            for (aUserobj of lsUser)
-            {
-
-                if(aUserobj.username === txtusername.value && aUserobj.password === txtpassword.value )
-                {
-                    userFound = true;
-                    founduser = aUserobj;
-                    break;
-                }
+            if(snap.val().password === txtpassword.value){
+                  sessionStorage.clear();
+                  sessionStorage.setItem("LoggedUser", txtusername.value)
+                 
+                  if(snap.val().role === "Admin"){
+                    window.location.replace("AdminHome.html")
+                  }
+                  else{
+                    window.location.replace("home.html")
+                  }
+                  
+            }
+            else{
+                alert("Incorrect password")
             }
         }
+        else{
+            alert("User not found")
+        }
+    });
+
+        // lsUser = JSON.parse(localStorage.getItem("Users"))
+
+        // let userFound = false;
+
+        // let founduser ={};
+
+        // if(lsUser !== null)
+        // {
+        //     for (aUserobj of lsUser)
+        //     {
+
+        //         if(aUserobj.username === txtusername.value && aUserobj.password === txtpassword.value )
+        //         {
+        //             userFound = true;
+        //             founduser = aUserobj;
+        //             break;
+        //         }
+        //     }
+        // }
         
 
-        if(userFound){
-            sessionStorage.clear();
-            sessionStorage.setItem("LoggedUser", founduser.id)
-            window.location.replace("home.html")
-        }
-        else {
-           alert("User doesn't exist")
+        // if(userFound){
+        //     sessionStorage.clear();
+        //     sessionStorage.setItem("LoggedUser", founduser.id)
+        //     window.location.replace("home.html")
+        // }
+        // else {
+        //    alert("User doesn't exist")
 
-        }
+        // }
 
     // }
 }

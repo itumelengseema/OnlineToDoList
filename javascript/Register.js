@@ -64,55 +64,38 @@ function Register()
         lblpassfeed.innerHTML = ""
     }
 
-    if(localStorage.length === 0) {
+    firebase
+    .database()
+    .ref("users/" + txtusername.value)
+    .on("value", function (snap) {
 
-        aUser.id = lsUser.length + 1;
-        aUser.username = txtusername.value;
-        aUser.password = txtpassword.value;
-
-        lsUser.push(aUser);
-
-        localStorage.setItem("Users", JSON.stringify(lsUser));
-
-        fclear(txtusername, txtpassword, txtrepassword)
-    }
-    else
-    {
-        lsUser = JSON.parse(localStorage.getItem("Users"))
-
-        aUser.id = lsUser.length + 1;
-        aUser.username = txtusername.value;
-        aUser.password = txtpassword.value;
-
-        let userFound = false;
-
-        lsUser.map(user => { 
-            if(user.username === aUser.username)
-            {
-                userFound = true;
-            }
-        });
-
-        if(userFound) { 
-            lblunfeed.innerHTML = "Username already exists"
-            lblunfeed.style.color = "red"
-
-            return false;
+        console.log(snap.val())
+        if(snap.val()){
+            
+            return;
         }
-        else {
-            lsUser.push(aUser);
-            localStorage.setItem("Users", JSON.stringify(lsUser));
-            fclear(txtusername, txtpassword, txtrepassword);
-        }
-    }
-
-    
-      div.style.background = "rgb(75, 180, 54)";
+        else{
+            firebase.database().ref('users/'+txtusername.value +"/LoginDetails").set({
+                username: txtusername.value,
+                password: txtpassword.value,
+                role: "User"
+              }).then(() =>{
+        
+                div.style.background = "rgb(75, 180, 54)";
   
-    setTimeout(() => {
-        div.style.background = "coral";
-     
-    }, 4000);
+                setTimeout(() => {
+                    div.style.background = "white";
+                 
+                }, 4000); 
+
+                fclear(txtusername, txtpassword, txtrepassword);
+        
+              }).catch(err =>{
+                alert(err)
+                console.log(err)
+              });
+        }
+    });
 }
 
 function fclear(txtusername, txtpassword, txtrepassword)

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Parking</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-bar">
+            <img class="logo" src="./images/e_parking.png">
+
+            <label id="txtTime">00:00:00</label>
+
+            <div class="nav-inner">
+                
+
+                <ul>
+                    <div class="dropdown">
+
+                        <img class="dropbtn" src="images/4737445_alarm_alert_bell_notification_ring_icon.png">
+                        
+                        <div class="dropdown-content">
+                    
+                        </div>
+                    </div>
+
+                    
+                    <li id="logout">Logout</li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+    
+    <div class="main-back-home">
+        
+
+            <div class="upper-sec">
+                
+                <div>
+                    <a name="btnNewItem" href="AdminHome.html" class="new-item">Back</a>
+                </div>
+            </div>
+            
+            <div class="tblItems">
+                    <table id="tblItems">
+                        <thead class="cls-thead">
+                            <tr class="cls-th">
+                                <th>Contact</th>
+                                <th>Make</th>
+                                <th>Model</th>
+                                <th>NumberPlate</th>
+                                <th>Owner</th>
+                                <th>Parking</th>
+                                <th>Province</th>
+                                <th>TimeIn</th>
+                                <th>Timeout</th>
+                                <th>Option</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody id="tblTbody">
+                            
+                        </tbody>
+                    </table>
+            </div>
+
+            <div class="table-scro">
+                <label>&lt;</label>
+                <label> Page 1 </label>
+                <label>&gt;</label>
+
+            </div>
+    </div>
+    <script src="./javascript/Bookings.js"></script>
+    <script src="./javascript/Logout.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+    <script src="./javascript/Config.js"></script>
+</body>
+</html>

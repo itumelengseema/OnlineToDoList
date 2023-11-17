@@ -13,50 +13,52 @@ const notiImg = document.querySelector(".dropbtn")
 
 lblTime = document.getElementById("txtTime");
 
-function ViewItem(element)
-{
-    window.location.replace(`ViewItem.html?id=${element.id}`);
-}
-
 function DeleteItem(element){
 
     if(confirm("You sure you want to delete this Item?"))
     {
         LoggedUser = sessionStorage.getItem("LoggedUser")
         
-        if(localStorage.getItem("Items") !== null)
-        {
-            LoggedUserItems = []
-            UsersItems = JSON.parse(localStorage.getItem("Items"))
+        const elId = element.id
 
-            for(Useritems of UsersItems)
-            {
-                if(Useritems.userid == LoggedUser)
-                {
-                    LoggedUserItems.push(Useritems);
-                }
-            }
+        loca = elId.split("/")[1].split("-")
 
-            newListItems = []
-            let neid = 0;
+        ke  = loca[1];
+            // console.log(loca[0])
+            // console.log(loca[1])
 
-            for(Useritems of UsersItems)
-            {
-                const elId = element.id
+            // her = {ke:loca[1]};
+            // //  = loca[1];
 
-                if(Useritems.id != Number(elId.split("delete-")[1]))
-                {
-                    Useritems.id = neid;
-                    neid++;
-                    newListItems.push(Useritems)
-                }
-            }
+            // console.log(her)
+        
+        firebase
+        .database()
+        .ref("users/" 
+        + LoggedUser
+        +"/Bookings/"
+        +elId.split("/")[0])
+        .remove().then(() => {
+            console.log(loca[0])
+            console.log(loca[1])
 
-            localStorage.setItem("Items", JSON.stringify(newListItems))
-        }
+            firebase.database().ref('BookingPlaces/' + loca[0]+"/"+ loca[1]).set(
+            loca[1]
+            ).then(() =>{
+    
+        alert("sAVED")
+    location.reload();
+          }).catch(err =>{
+            alert(err)
+            console.log(err)
+          });
+             
+        }).catch(err =>{
+            alert(err)
+        });
     }
 
-    location.reload();
+    
 }
 
 function EditItem(element)
@@ -64,219 +66,63 @@ function EditItem(element)
     window.location.replace(`editItem.html?id=${element.id}`);
 }
 
-function Search()
-{
-
-   for(i = 0; i <= table.rows.length; i++) {
-
-    if(table.rows.length != 1)
-    {
-        table.deleteRow(1);
-    }
-
-   }
-
-    const tb = document.createElement("tr")
-
-        LoggedUser = sessionStorage.getItem("LoggedUser")
-        const lens = JSON.parse(localStorage.getItem("Items"))
-        
-        if(localStorage.getItem("Items") !== null)
-        {
-            
-            UsersItems = JSON.parse(localStorage.getItem("Items"))
-            LoggedUserItems = []
-
-            for(Useritems of UsersItems)
-            {
-                if(Useritems.userid == LoggedUser)
-                {
-                    LoggedUserItems.push(Useritems);
-                }
-            }
-
-            rowCount = 0;
-
-            for(item of LoggedUserItems.reverse())
-            {
-
-                if(item.Title.toLowerCase().includes(txtSearch.value.toLowerCase())){
-                    fGenerateSearchTable(item)
-                }
-            }
-            
-            table.appendChild(tableBody)
-        }
-}
 
 let notiItem = '';
-function fGenerateTable(item) {
+
+function fGenerateTable() {
     
     let rowID;
-    const row = document.createElement("tr")
+    // const row = document.createElement("tr")
 
-    rowCount++;
+    // rowCount++;
     
+    firebase
+    .database()
+    .ref("users/" + LoggedUser+"/Bookings")
+    .on("value", function (snap) {
 
-    for(let i = 0; i < Object.keys(item).length; i++)
-    {
-    
-        if(Object.keys(item)[i] !== "id")
-        {
+        snap.forEach(element => {
+
+            let key = "";
+            dataK = ""
+
+            const row = document.createElement("tr")
+
+            element.forEach((data) => {
             const cell = document.createElement("td")
+                let cellData;
 
-            let cellData;
-        
-            if(Object.keys(item)[i] === "userid") 
-            {
-                cellData = document.createTextNode(`${rowCount}`)
-            }
-            else
-            {
-                if(Object.keys(item)[i] !== "Date")
-                {
-                    cellData = document.createTextNode(`${item[Object.keys(item)[i]].substring(0, 11)} ...`)
-                    
+                if(data.key === "Parking"){
+                    key = data;
+                    dataK = element.key;
                 }
-                else
-                {
-                    if(`${item[Object.keys(item)[i]]}` == fTodayDate()) 
-                    {
-                        // console.log(`date ${}`)
+    
+                cellData = document.createTextNode(`${data.val()}`)
+                cell.appendChild(cellData);
+                row.appendChild(cell);
+            })
 
-                        if(item["Description"].toLowerCase().includes("send an email") || item["Description"].toLowerCase().includes("send email")){
-                            notiItem += `${'<div class="item"><div>' + item["Description"].substring(0, 35) + '</div><a href="mailto:">Send</a></div>'}`
-                        }
-                        else{
-                            notiItem += `${'<div class="item"><div>' + item["Description"].substring(0, 35) + '</div></div>'}`
-                        }
-                        notiImg.src = "images/9042242_bell_notification_icon.png";
-                        
-                    }
-                    cellData = document.createTextNode(`${item[Object.keys(item)[i]]}`)
-                }
-            }
-            
-            // notiItem += `${'<div class="item"><div>Send email to Sfisonxumalo69]@gmail.com</div><button value="send">Send</button></div>'}`
-            
-            cell.appendChild(cellData);
-            row.appendChild(cell);
-        } 
-        else {
-            rowID = `${item[Object.keys(item)[i]]}`
-        }
-    }
-
-    notifications.innerHTML = notiItem ;
-
-    const cellactions = document.createElement("td")
+            const cellactions = document.createElement("td")
 
     const div = document.createElement("div")
     div.classList.add("icons");
 
-    const im1 = document.createElement("img")
-
-    im1.src = "../images/eye.png"
-    im1.setAttribute("id", "view-" + rowID)
-    im1.addEventListener("click", () =>{ViewItem(im1)});
-
-    const im2 = document.createElement("img")
-    im2.src = "../images/pencil.png"
-    im2.setAttribute("id", "edit-" + rowID)
-    im2.addEventListener("click", () =>{EditItem(im2)});
-
     const im3 = document.createElement("img")
-    im3.src = "../images/delete (1).png"
-    im3.setAttribute("id", "delete-" + rowID)
+    im3.src = "./images/delete (1).png"
+    im3.setAttribute("id", dataK + "/" + key.val())
     im3.addEventListener("click", () =>{DeleteItem(im3)});
-
-    div.appendChild(im1)
-    div.appendChild(im2)
+ 
     div.appendChild(im3)
 
     cellactions.appendChild(div)
     row.appendChild(cellactions)
 
     tableBody.appendChild(row);
+        });
+    });
+
+    
 }
-
-function fGenerateSearchTable(item) {
-    
-    let rowID;
-    const row = document.createElement("tr")
-
-    rowCount++;
-    
-
-    for(let i = 0; i < Object.keys(item).length; i++)
-    {
-    
-        if(Object.keys(item)[i] !== "id")
-        {
-            const cell = document.createElement("td")
-
-            let cellData;
-        
-            if(Object.keys(item)[i] === "userid") 
-            {
-                cellData = document.createTextNode(`${rowCount}`)
-            }
-            else
-            {
-                if(Object.keys(item)[i] !== "Date")
-                {
-                    cellData = document.createTextNode(`${item[Object.keys(item)[i]].substring(0, 8)} ...`)
-                    
-                }
-                else
-                {
-                    
-                    cellData = document.createTextNode(`${item[Object.keys(item)[i]]}`)
-                }
-            }
-            
-            // notiItem += `${'<div class="item"><div>Send email to Sfisonxumalo69]@gmail.com</div><button value="send">Send</button></div>'}`
-            
-            cell.appendChild(cellData);
-            row.appendChild(cell);
-        } 
-        else {
-            rowID = `${item[Object.keys(item)[i]]}`
-        }
-    }
-
-    const cellactions = document.createElement("td")
-
-    const div = document.createElement("div")
-    div.classList.add("icons");
-
-    const im1 = document.createElement("img")
-
-    im1.src = "../images/eye.png"
-    im1.setAttribute("id", "view-" + rowID)
-    im1.addEventListener("click", () =>{ViewItem(im1)});
-
-    const im2 = document.createElement("img")
-    im2.src = "../images/pencil.png"
-    im2.setAttribute("id", "edit-" + rowID)
-    im2.addEventListener("click", () =>{EditItem(im2)});
-
-    const im3 = document.createElement("img")
-    im3.src = "../images/delete (1).png"
-    im3.setAttribute("id", "delete-" + rowID)
-    im3.addEventListener("click", () =>{DeleteItem(im3)});
-
-    div.appendChild(im1)
-    div.appendChild(im2)
-    div.appendChild(im3)
-
-    cellactions.appendChild(div)
-    row.appendChild(cellactions)
-
-    tableBody.appendChild(row);
-}
-
-txtSearch.addEventListener("search", Search)
 
 function fgetSystemTime(){
     setInterval(() => {
@@ -339,27 +185,6 @@ window.addEventListener("DOMContentLoaded", () =>{
     else{
 
         LoggedUser = sessionStorage.getItem("LoggedUser")
-        const lens = JSON.parse(localStorage.getItem("Items"))
-        
-        if(localStorage.getItem("Items") !== null)
-        {
-            
-            UsersItems = JSON.parse(localStorage.getItem("Items"))
-
-            for(Useritems of UsersItems)
-            {
-                if(Useritems.userid == LoggedUser)
-                {
-                    LoggedUserItems.push(Useritems);
-                }
-            }
-
-            for(item of LoggedUserItems.reverse())
-            {
-                fGenerateTable(item)
-                // table.appendChild(tableBody)
-                
-            }
-        }
+        fGenerateTable()
     }
 })
